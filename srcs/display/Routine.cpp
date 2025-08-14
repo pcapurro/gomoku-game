@@ -14,10 +14,11 @@ void	routine(void* engine, void* ai)
 	drawMap(window, gameEngine);
 	window.display();
 
+	bool	game = true;
+
 	while (window.isOpen() == true)
 	{
 		sf::Event	event;
-		bool		game = true;
 
 		while (window.pollEvent(event) == true)
 		{
@@ -36,20 +37,27 @@ void	routine(void* engine, void* ai)
 			}
 
 			if (event.type == sf::Event::MouseButtonReleased \
-				&& event.mouseButton.button == sf::Mouse::Left \
-				&& game == true)
+				&& event.mouseButton.button == sf::Mouse::Left)
 			{
-				int	x = event.mouseButton.x / (WINDOW_W / MAP_WIDTH);
-				int	y = event.mouseButton.y / (WINDOW_H / MAP_HEIGHT);
+				if (game == true)
+				{
+					int	x = event.mouseButton.x / (WINDOW_W / MAP_WIDTH);
+					int	y = event.mouseButton.y / (WINDOW_H / MAP_HEIGHT);
 
-				gameEngine->playMove(x, y);
+					if (gameEngine->playMove(x, y) == NULL)
+						cout << "Illegal move." << endl;
 
-				drawMap(window, gameEngine);
-				window.display();
+					drawMap(window, gameEngine);
+					window.display();
 
-				if (gameEngine->getGameState() != 0)
-					gameEngine->printSummary(), game = false;
+					if (gameEngine->getGameState() != 0)
+						gameEngine->printSummary(), game = false;
+				}
+				else
+					cout << endl << "Game is over. Press ENTER to start a new game." << endl;
 			}
 		}
 	}
+
+	(void) gameAi;
 }

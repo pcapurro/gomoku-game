@@ -30,10 +30,11 @@ void	drawMap(sf::RenderWindow& window, Engine* engine)
 			if (map[i * MAP_WIDTH + k] != EMPTY)
 			{
 				circle.setPosition(x, y);
+
 				if (map[i * MAP_WIDTH + k] == PLAYER_1)
-					circle.setFillColor(sf::Color::Green);
+					circle.setFillColor(getPlayerColor(PLAYER_1));
 				else
-					circle.setFillColor(sf::Color::Red);
+					circle.setFillColor(getPlayerColor(PLAYER_2));
 
 				window.draw(circle);
 			}
