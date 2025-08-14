@@ -8,6 +8,8 @@ NAME = gomoku
 
 SRCS = srcs/main.cpp \
 	srcs/display/Routine.cpp \
+	srcs/display/Display.cpp \
+	srcs/display/Tools.cpp \
 	srcs/ai/Ai.cpp \
 	srcs/ai/Init.cpp \
 	srcs/ai/Tools.cpp \

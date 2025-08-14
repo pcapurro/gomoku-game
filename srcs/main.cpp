@@ -6,7 +6,7 @@ int		main(void)
 {
 	try
 	{
-		Engine	engine;
+		Engine	engine(false);
 		Ai*		ai = NULL;
 
 		if (GAME_MODE == PVE)
