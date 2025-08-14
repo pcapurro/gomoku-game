@@ -7,17 +7,23 @@
 NAME = gomoku
 
 SRCS = srcs/main.cpp \
-	srcs/core/Ai.cpp \
-	srcs/core/Engine.cpp \
-	srcs/core/Init.cpp \
-	srcs/core/Tools.cpp \
+	srcs/display/Routine.cpp \
+	srcs/ai/Ai.cpp \
+	srcs/ai/Init.cpp \
+	srcs/ai/Tools.cpp \
+	srcs/engine/Engine.cpp \
+	srcs/engine/Init.cpp \
+	srcs/engine/Tools.cpp \
 
 CXX = c++ \
 	-I includes/ \
 	-D MAP_WIDTH=19 -D MAP_HEIGHT=19 \
-	-D PLAYER1_COLOR=2 -D PLAYER2_COLOR=1
+	-D PLAYER1_COLOR=2 -D PLAYER2_COLOR=1 \
+	-D GAME_MODE=21
 
 CXXFLAGS = -Wall -Wextra -Werror
+
+SFMLFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -26,7 +32,7 @@ OBJS = $(SRCS:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME) $(SFMLFLAGS)
 
 re: fclean all
 
