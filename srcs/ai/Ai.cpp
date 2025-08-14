@@ -10,12 +10,14 @@ int		Ai::calculate(void)
 	return (value);
 }
 
-int		Ai::getBestAnswer(Engine& original)
+int		Ai::getBestAnswer(Engine* original)
 {
 	_engine = original;
 
-	_aiPlayer = original.getActualPlayer();
-	_legalMoves = original.getLegalMoves(_aiPlayer);
+	_aiPlayer = original->getActualPlayer();
+	_legalMoves = original->getLegalMoves(_aiPlayer);
+
+	cout << _legalMoves.size() << endl;
 
 	auto		start = std::chrono::high_resolution_clock::now();
 	int			answer = calculate();

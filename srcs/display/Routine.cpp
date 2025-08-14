@@ -15,6 +15,20 @@ void	routine(void* engine, void* ai)
 	window.display();
 
 	bool	game = true;
+	int		aiSide = 0, aiAnswer = 0;
+
+	if (gameAi != NULL)
+	{
+		srand(time(NULL));
+		aiSide = (rand() % 2) + 1;
+
+		if (gameEngine->getActualPlayer() == aiSide)
+		{
+			aiAnswer = gameAi->getBestAnswer(gameEngine);
+			gameEngine->playMove(aiAnswer % MAP_WIDTH, aiAnswer / MAP_WIDTH);
+			displayMap(window, gameEngine);
+		}
+	}
 
 	while (window.isOpen() == true)
 	{
@@ -36,6 +50,17 @@ void	routine(void* engine, void* ai)
 				window.display();
 			}
 
+			if (event.type == sf::Event::KeyPressed \
+				&& (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Right))
+			{
+				if (event.key.code == sf::Keyboard::Left)
+					gameEngine->undoMove();
+				if (event.key.code == sf::Keyboard::Right)
+					gameEngine->redoMove();
+
+				displayMap(window, gameEngine);
+			}
+
 			if (event.type == sf::Event::MouseButtonReleased \
 				&& event.mouseButton.button == sf::Mouse::Left)
 			{
@@ -47,8 +72,13 @@ void	routine(void* engine, void* ai)
 					if (gameEngine->playMove(x, y) == NULL)
 						cout << "Illegal move." << endl;
 
-					drawMap(window, gameEngine);
-					window.display();
+					if (ai != NULL)
+					{
+						aiAnswer = gameAi->getBestAnswer(gameEngine);
+						gameEngine->playMove(aiAnswer % MAP_WIDTH, aiAnswer / MAP_WIDTH);
+					}
+
+					displayMap(window, gameEngine);
 
 					if (gameEngine->getGameState() != 0)
 						gameEngine->printSummary(), game = false;

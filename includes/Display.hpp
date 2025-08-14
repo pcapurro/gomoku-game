@@ -11,6 +11,8 @@
 
 void		centerWindow(sf::RenderWindow& window);
 sf::Color	getPlayerColor(const int player);
+
+void		displayMap(sf::RenderWindow& window, Engine* engine);
 void		drawMap(sf::RenderWindow& window, Engine* engine);
 
 void		routine(void* engine, void* ai);

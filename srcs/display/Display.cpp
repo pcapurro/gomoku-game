@@ -1,6 +1,14 @@
 #include "Display.hpp"
 #include "Engine.hpp"
 
+void	displayMap(sf::RenderWindow& window, Engine* engine)
+{
+	window.clear();
+
+	drawMap(window, engine);
+	window.display();
+}
+
 void	drawMap(sf::RenderWindow& window, Engine* engine)
 {
 	const int*			map = engine->getMap();

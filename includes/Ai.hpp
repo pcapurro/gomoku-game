@@ -11,7 +11,7 @@ class Ai
 
 		Ai(const Ai& original) = delete;
 
-		int					getBestAnswer(Engine& original);
+		int					getBestAnswer(Engine* original);
 		int					calculate(void);
 
 	private:
