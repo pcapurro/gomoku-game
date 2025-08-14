@@ -1,39 +1,50 @@
 #include "Engine.hpp"
 
-void	Engine::displayMap(const int* board) const
+int		Engine::isGameOver(void)
 {
-	for (int i = 0; i != MAP_HEIGHT; i++)
+	if (_actualPlayer == PLAYER_1 && _p2Cptd >= 10)
+		return (PLAYER_2);
+
+	if (_actualPlayer == PLAYER_2 && _p1Cptd >= 10)
+		return (PLAYER_1);
+
+	if (isLineFive() == true)
+		return (_otherPlayer);
+
+	if (getLegalMoves(_actualPlayer).size() == 0)
+		return (-1);
+
+	return (0);
+}
+
+bool	Engine::isLegal(const int x, const int y, const int player)
+{
+	if (x < 0 || y < 0)
+		return (false);
+
+	if (x >= MAP_WIDTH || y >= MAP_HEIGHT)
+		return (false);
+
+	if (getInfo(x, y, _board) != EMPTY)
+		return (false);
+
+	int		alignNow = 0;
+	int		alignAfter = 0;
+
+	tryMove(x, y, player);
+
+	for (int i = 0; i != MAP_WIDTH * MAP_HEIGHT; i++)
 	{
-		for (int k = 0; k != MAP_WIDTH; k++)
-		{
-			std::cout << "[";
-
-			if (getInfo(k, i, board) != 0)
-			{
-				if (getInfo(k, i, board) == PLAYER_1)
-					std::cout << _player1Color << 1 << END_COLOR;
-				else
-					std::cout << _player2Color << 2 << END_COLOR;
-			}
-			else
-				std::cout << getInfo(k, i, board);
-
-			std::cout << "]";
-		}
-		std::cout << std::endl;
+		if (_board[i] == player)
+			alignNow += getFreeThrees(i % MAP_WIDTH, i / MAP_WIDTH, _board, player);
+		if (_testBoard[i] == player)
+			alignAfter += getFreeThrees(i % MAP_WIDTH, i / MAP_WIDTH, _testBoard, player);
 	}
-}
 
-void	Engine::undoMove(void)
-{
-	if (_actualMove != 0)
-		_actualMove--, refreshMap();
-}
+	if ((alignAfter / 2) - (alignNow / 2) == 2)
+		return (false);
 
-void	Engine::redoMove(void)
-{
-	if (_actualMove != (int) _summary.size())
-		_actualMove++, refreshMap();
+	return (true);
 }
 
 void*	Engine::playMove(const int x, const int y, const bool refresh)

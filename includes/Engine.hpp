@@ -3,14 +3,6 @@
 
 # include "Gomoku.hpp"
 
-using std::cout;
-using std::endl;
-
-using std::vector;
-using std::string;
-
-using std::chrono::high_resolution_clock;
-
 class Engine
 {
 	public:
@@ -85,7 +77,7 @@ class Engine
 		const char*		_player1Color;
 		const char*		_player2Color;
 	
-		std::vector<std::vector<int>>		_summary;
+		vector<vector<int>>		_summary;
 
 		high_resolution_clock::time_point	_startTime;
 		high_resolution_clock::time_point	_endTime;

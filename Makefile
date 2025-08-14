@@ -10,7 +10,6 @@ SRCS = srcs/main.cpp \
 	srcs/core/Ai.cpp \
 	srcs/core/Engine.cpp \
 	srcs/core/Init.cpp \
-	srcs/core/Checkers.cpp \
 	srcs/core/Tools.cpp \
 
 CXX = c++ \

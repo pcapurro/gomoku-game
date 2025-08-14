@@ -64,8 +64,17 @@
 
 # define END_COLOR "\033[0m"
 
+# define EMPTY 0
 # define PLAYER_1 1
 # define PLAYER_2 2
+
+using std::cout;
+using std::endl;
+
+using std::vector;
+using std::string;
+
+using std::chrono::high_resolution_clock;
 
 int		main(void);
 

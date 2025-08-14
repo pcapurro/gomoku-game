@@ -43,28 +43,6 @@ std::vector<int>	Engine::getLegalMoves(const int player)
 	return (legalMoves);
 }
 
-void	Engine::printSummary(void)
-{
-	if (_otherPlayer == PLAYER_1)
-		cout << "Player " << _player1Color << "#" << _otherPlayer << END_COLOR << " won the game! 🎉" << endl;
-	else
-		cout << "Player " << _player2Color << "#" << _otherPlayer << END_COLOR << " won the game! 🎉" << endl;
-	cout << endl;
-
-	cout << _summary.size() << " moves were played during the game:" << endl;
-
-	for (int i = 0; i != (int) _summary.size(); i++)
-		cout << i << ". {" << _summary[i][0] << ":" << _summary[i][1] << "}  ";
-	cout << endl << endl;
-
-	cout << "Player " << _player1Color << "#1" << END_COLOR << " captured: " << _p1Cptd << endl;
-	cout << "Player " << _player2Color << "#2" << END_COLOR << " captured: " << _p2Cptd << endl;
-	cout << endl;
-
-	cout << "The game lasted " << std::fixed << std::setprecision(2) \
-		<< std::chrono::duration<double>(_endTime - _startTime).count() << " second(s)." << endl;
-}
-
 int		Engine::getFreeThrees(const int x, const int y, const int* board, const int player) const
 {
 	int		coords[16] = { -42, 1,  -42, -1,  1, -42,  -1, -42,  \
@@ -92,12 +70,12 @@ int		Engine::getFreeThrees(const int x, const int y, const int* board, const int
 
 			value = board[(newY * MAP_WIDTH) + newX];
 
-			if (value == 0 || value == player)
+			if (value == EMPTY || value == player)
 			{
 				line[elements] = value;
 				elements++;
 
-				if (value == 0)
+				if (value == EMPTY)
 					free++;
 			}
 		}
@@ -247,4 +225,111 @@ void	Engine::refreshMap(void)
 		playMove(summary[i][0], summary[i][1], true);
 
 	_summary = summary;
+}
+
+void	Engine::undoMove(void)
+{
+	if (_actualMove != 0)
+		_actualMove--, refreshMap();
+}
+
+void	Engine::redoMove(void)
+{
+	if (_actualMove != (int) _summary.size())
+		_actualMove++, refreshMap();
+}
+
+bool	Engine::isFreeThree(const int* line) const
+{
+	if (line[0] != EMPTY)
+		return (false);
+
+	if (line[1] != EMPTY && line[2] != EMPTY \
+		&& line[3] != EMPTY && line[4] == EMPTY)
+		return (true);
+
+	if (line[1] != EMPTY && line[2] == EMPTY \
+		&& line[3] != EMPTY && line[4] != EMPTY \
+		&& line[5] == EMPTY)
+		return (true);
+
+	if (line[1] != EMPTY && line[2] != EMPTY \
+		&& line[3] == EMPTY && line[4] != EMPTY \
+		&& line[5] == EMPTY)
+		return (true);
+
+	return (false);
+}
+
+bool	Engine::isLineFive(void)
+{
+	int		value = 0;
+
+	value = getFiveLine(_otherPlayer, _board);
+	if (value == 0)
+		return (false);
+
+	std::vector<int>	legalMoves = {0};
+
+	legalMoves = getLegalMoves(_actualPlayer);
+
+	for (int i = 0; i != (int) legalMoves.size(); i++)
+	{
+		int x = legalMoves.at(i) % MAP_WIDTH;
+		int y = legalMoves.at(i) / MAP_WIDTH;
+
+		tryMove(x, y, _actualPlayer);
+
+		value = getFiveLine(_otherPlayer, _testBoard);
+		if (value == 0)
+			return (false);
+	}
+
+	return (true);
+}
+
+void	Engine::printSummary(void)
+{
+	if (_otherPlayer == PLAYER_1)
+		cout << "Player " << _player1Color << "#" << _otherPlayer << END_COLOR << " won the game! 🎉" << endl;
+	else
+		cout << "Player " << _player2Color << "#" << _otherPlayer << END_COLOR << " won the game! 🎉" << endl;
+	cout << endl;
+
+	cout << _summary.size() << " moves were played during the game:" << endl;
+
+	for (int i = 0; i != (int) _summary.size(); i++)
+		cout << i << ". {" << _summary[i][0] << ":" << _summary[i][1] << "}  ";
+	cout << endl << endl;
+
+	cout << "Player " << _player1Color << "#1" << END_COLOR << " captured: " << _p1Cptd << endl;
+	cout << "Player " << _player2Color << "#2" << END_COLOR << " captured: " << _p2Cptd << endl;
+	cout << endl;
+
+	cout << "The game lasted " << std::fixed << std::setprecision(2) \
+		<< std::chrono::duration<double>(_endTime - _startTime).count() << " second(s)." << endl;
+}
+
+void	Engine::displayMap(const int* board) const
+{
+	for (int i = 0; i != MAP_HEIGHT; i++)
+	{
+		for (int k = 0; k != MAP_WIDTH; k++)
+		{
+			std::cout << "[";
+
+			if (getInfo(k, i, board) != 0)
+			{
+				if (getInfo(k, i, board) == PLAYER_1)
+					std::cout << _player1Color << 1 << END_COLOR;
+				else
+					std::cout << _player2Color << 2 << END_COLOR;
+			}
+			else
+				std::cout << getInfo(k, i, board);
+
+			std::cout << "]";
+		}
+		std::cout << std::endl;
+	}
 }
