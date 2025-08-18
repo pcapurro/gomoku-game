@@ -6,7 +6,7 @@
 class Engine
 {
 	public:
-		Engine(const bool optimized = true);
+		Engine(void);
 		Engine(const Engine& original) = delete;
 		~Engine(void) = default;
 
@@ -53,8 +53,6 @@ class Engine
 										const int* board) const;
 
 		int				getInfo(const int x, const int y, const int* board) const;
-
-		bool			_optimized;
 
 		int				_board[MAP_WIDTH * MAP_HEIGHT];
 		int				_testBoard[MAP_WIDTH * MAP_HEIGHT];

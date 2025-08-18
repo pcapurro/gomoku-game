@@ -1,9 +1,7 @@
 #include "Engine.hpp"
 
-Engine::Engine(const bool optimized)
+Engine::Engine(void)
 {
-	_optimized = optimized;
-
 	for (int i = 0; i != MAP_WIDTH * MAP_HEIGHT; i++)
 		_board[i] = 0;
 
@@ -54,13 +52,10 @@ Engine&		Engine::operator=(const Engine& original)
 	_p1CptdTest = original._p1CptdTest;
 	_p2CptdTest = original._p2CptdTest;
 
-	if (_optimized == false)
-	{
-		_moves = original._moves;
+	_moves = original._moves;
 
-		_player1Color = original._player1Color;
-		_player2Color = original._player2Color;
-	}
+	_player1Color = original._player1Color;
+	_player2Color = original._player2Color;
 
 	_summary = original._summary;
 

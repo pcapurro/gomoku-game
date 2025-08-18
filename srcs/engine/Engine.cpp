@@ -63,16 +63,11 @@ void*	Engine::playMove(const int x, const int y, const bool refresh)
 
 	_state = isGameOver();
 
-	if (_optimized == false)
-	{
-		if (_moves == 0)
-			_startTime = std::chrono::high_resolution_clock::now();
+	if (_moves == 0)
+		_startTime = std::chrono::high_resolution_clock::now();
 
-		_moves++;
-
-		if (_state != 0)
-			_endTime = std::chrono::high_resolution_clock::now();
-	}
+	if (_state != 0)
+		_endTime = std::chrono::high_resolution_clock::now();
 
 	if (refresh == false && (int) _summary.size() != _actualMove)
 	{
@@ -81,8 +76,9 @@ void*	Engine::playMove(const int x, const int y, const bool refresh)
 	}
 
 	_summary.push_back({x, y});
+
 	if (refresh == false)
-		_actualMove++;
+		_actualMove++, _moves++;
 
 	return (this);
 }

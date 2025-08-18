@@ -63,18 +63,6 @@
 #  define PLAYER2_COLOR 1
 # endif
 
-# define PVE 21
-# define PVP 42
-
-# ifndef GAME_MODE
-#  define GAME_MODE 1
-# endif
-
-# if GAME_MODE != PVE && GAME_MODE != PVP
-#  undef GAME_MODE
-#  define GAME_MODE PVE
-# endif
-
 # define END_COLOR "\033[0m"
 
 # define EMPTY 0

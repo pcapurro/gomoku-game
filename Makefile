@@ -9,10 +9,6 @@ NAME = gomoku
 SRCS = srcs/main.cpp \
 	srcs/display/Routine.cpp \
 	srcs/display/Display.cpp \
-	srcs/display/Tools.cpp \
-	srcs/ai/Ai.cpp \
-	srcs/ai/Init.cpp \
-	srcs/ai/Tools.cpp \
 	srcs/engine/Engine.cpp \
 	srcs/engine/Init.cpp \
 	srcs/engine/Tools.cpp \
@@ -20,8 +16,7 @@ SRCS = srcs/main.cpp \
 CXX = c++ \
 	-I includes/ \
 	-D MAP_WIDTH=19 -D MAP_HEIGHT=19 \
-	-D PLAYER1_COLOR=2 -D PLAYER2_COLOR=1 \
-	-D GAME_MODE=21
+	-D PLAYER1_COLOR=2 -D PLAYER2_COLOR=1
 
 CXXFLAGS = -Wall -Wextra -Werror
 

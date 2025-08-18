@@ -4,17 +4,29 @@
 # include <SFML/Graphics.hpp>
 
 # include "Engine.hpp"
-# include "Ai.hpp"
 
 # define WINDOW_W (MAP_WIDTH * 800) / 19
 # define WINDOW_H (MAP_HEIGHT * 750) / 19
 
-void		centerWindow(sf::RenderWindow& window);
-sf::Color	getPlayerColor(const int player);
+class Display
+{
+	public:
+		Display(void) = default;
+		Display(const Display& original) = delete;
+		~Display(void) = default;
 
-void		displayMap(sf::RenderWindow& window, Engine* engine);
-void		drawMap(sf::RenderWindow& window, Engine* engine);
+		void		centerWindow(sf::RenderWindow& window);
+		sf::Color	getPlayerColor(const int player);
 
-void		routine(void* engine, void* ai);
+		void		displayMap(sf::RenderWindow& window, Engine* engine);
+		void		drawMap(sf::RenderWindow& window, Engine* engine);
+
+		void		reactKey(Engine* gameEngine, sf::RenderWindow& window, \
+								sf::Event& event, bool& game);
+		void		reactMouse(Engine* gameEngine, sf::RenderWindow& window, \
+								sf::Event& event, bool& game);
+
+		void		routine(void* engine);
+};
 
 #endif
