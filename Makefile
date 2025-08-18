@@ -4,7 +4,7 @@
 
 ## === VARIABLES === ##
 
-NAME = gomoku
+NAME = gomoku-game
 
 SRCS = srcs/main.cpp \
 	srcs/display/Routine.cpp \
@@ -16,9 +16,8 @@ SRCS = srcs/main.cpp \
 	srcs/engine/Tools.cpp \
 	srcs/engine/Print.cpp \
 
-CXX = c++ \
-	-I includes/ \
-	-D MAP_WIDTH=19 -D MAP_HEIGHT=19 \
+CXX = c++ -I includes/ \
+	-D MAP_WIDTH=21 -D MAP_HEIGHT=21 \
 	-D PLAYER1_COLOR=2 -D PLAYER2_COLOR=1
 
 CXXFLAGS = -Wall -Wextra -Werror

@@ -27,8 +27,7 @@ void	Display::reactKey(Engine* gameEngine, sf::RenderWindow& window, sf::Event& 
 		gameEngine->resetGame();
 		game = true;
 
-		drawMap(window, gameEngine);
-		window.display();
+		displayMap(window, gameEngine);
 	}
 
 	if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Right)
@@ -48,9 +47,7 @@ void	Display::routine(void* engine)
 	sf::RenderWindow	window(sf::VideoMode(WINDOW_W, WINDOW_H), "gomoku-game");
 
 	centerWindow(window);
-
-	drawMap(window, gameEngine);
-	window.display();
+	displayMap(window, gameEngine);
 
 	bool	game = true;
 

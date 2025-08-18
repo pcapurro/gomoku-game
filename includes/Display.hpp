@@ -6,7 +6,7 @@
 # include "Engine.hpp"
 
 # define WINDOW_W (MAP_WIDTH * 800) / 19
-# define WINDOW_H (MAP_HEIGHT * 750) / 19
+# define WINDOW_H (MAP_HEIGHT * 800) / 19
 
 class Display
 {
@@ -18,8 +18,10 @@ class Display
 		void		centerWindow(sf::RenderWindow& window);
 		sf::Color	getPlayerColor(const int player);
 
+		void		drawPlayers(sf::RenderWindow& window, Engine* engine);
+		void		drawMap(sf::RenderWindow& window);
+
 		void		displayMap(sf::RenderWindow& window, Engine* engine);
-		void		drawMap(sf::RenderWindow& window, Engine* engine);
 
 		void		reactKey(Engine* gameEngine, sf::RenderWindow& window, \
 								sf::Event& event, bool& game);

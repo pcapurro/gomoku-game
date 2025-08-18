@@ -1,22 +1,6 @@
 #include "Display.hpp"
 #include "Engine.hpp"
 
-void	Display::centerWindow(sf::RenderWindow& window)
-{
-	sf::VideoMode		screen = sf::VideoMode::getDesktopMode();
-
-	window.setPosition(sf::Vector2i((screen.width - WINDOW_W) / 2,\
-		(screen.height - WINDOW_H) / 2));
-}
-
-void	Display::displayMap(sf::RenderWindow& window, Engine* engine)
-{
-	window.clear();
-
-	drawMap(window, engine);
-	window.display();
-}
-
 sf::Color	Display::getPlayerColor(const int player)
 {
 	if (player == PLAYER_1)
@@ -58,43 +42,89 @@ sf::Color	Display::getPlayerColor(const int player)
 	return (sf::Color::Green);
 }
 
-void	Display::drawMap(sf::RenderWindow& window, Engine* engine)
+void	Display::centerWindow(sf::RenderWindow& window)
+{
+	sf::VideoMode		screen = sf::VideoMode::getDesktopMode();
+
+	window.setPosition(sf::Vector2i((screen.width - WINDOW_W) / 2,\
+		(screen.height - WINDOW_H) / 2));
+}
+
+void	Display::drawPlayers(sf::RenderWindow& window, Engine* engine)
 {
 	const int*			map = engine->getMap();
-	sf::RectangleShape	rectangle(sf::Vector2f(WINDOW_W / MAP_WIDTH, WINDOW_H / MAP_HEIGHT));
-	sf::CircleShape		circle(std::min((WINDOW_W / MAP_WIDTH) / 2, (WINDOW_H / MAP_HEIGHT) / 2));
-
-	rectangle.setFillColor(sf::Color::White);
-	rectangle.setOutlineColor(sf::Color::Black);
-	rectangle.setOutlineThickness(2.f);
-
-	window.clear();
+	sf::CircleShape		circle;
 
 	int 	x = 0;
 	int		y = 0;
 
+	circle.setRadius(std::min((WINDOW_W / MAP_WIDTH) / 2.5, \
+		(WINDOW_H / MAP_HEIGHT) / 2.5));
+
 	for (int i = 0; i != MAP_HEIGHT; i++)
 	{
 		x = 0;
-		y = (WINDOW_H / MAP_HEIGHT) * i;
+		y = 4 + (WINDOW_H / MAP_HEIGHT) * i;
 
 		for (int k = 0; k != MAP_WIDTH; k++)
 		{
-			x = (WINDOW_W / MAP_WIDTH) * k;
-			rectangle.setPosition(x, y);
-			window.draw(rectangle);
+			if (map[i * MAP_WIDTH + k] == EMPTY)
+				continue ;
 
-			if (map[i * MAP_WIDTH + k] != EMPTY)
-			{
-				circle.setPosition(x, y);
+			x = 4 + ((WINDOW_W / MAP_WIDTH) / 2) * k * 2;
 
-				if (map[i * MAP_WIDTH + k] == PLAYER_1)
-					circle.setFillColor(getPlayerColor(PLAYER_1));
-				else
-					circle.setFillColor(getPlayerColor(PLAYER_2));
+			circle.setPosition(x, y);
 
-				window.draw(circle);
-			}
+			if (map[i * MAP_WIDTH + k] == PLAYER_1)
+				circle.setFillColor(getPlayerColor(PLAYER_1));
+			else
+				circle.setFillColor(getPlayerColor(PLAYER_2));
+
+			window.draw(circle);
 		}
 	}
+}
+
+void	Display::drawMap(sf::RenderWindow& window)
+{
+	sf::RectangleShape	rectangle;
+
+	rectangle.setSize(sf::Vector2f(WINDOW_W, WINDOW_H));
+	rectangle.setFillColor(sf::Color::White);
+	window.draw(rectangle);
+
+	rectangle.setFillColor(sf::Color::Black);
+
+	float 	x = 0;
+	float	y = 0;
+
+	rectangle.setSize(sf::Vector2f(2, WINDOW_H));
+	y = 0;
+
+	for (int i = 1; i < MAP_WIDTH * 2; i += 2)
+	{
+		x = ((WINDOW_W / MAP_WIDTH) / 2) * i;
+		rectangle.setPosition(x, y);
+		window.draw(rectangle);
+	}
+
+	rectangle.setSize(sf::Vector2f(WINDOW_W, 2));
+	x = 0;
+
+	for (int i = 1; i < MAP_HEIGHT * 2; i += 2)
+	{
+		y = ((WINDOW_H / MAP_HEIGHT) / 2) * i;
+		rectangle.setPosition(x, y);
+		window.draw(rectangle);
+	}
+}
+
+void	Display::displayMap(sf::RenderWindow& window, Engine* engine)
+{
+	window.clear();
+
+	drawMap(window);
+	drawPlayers(window, engine);
+
+	window.display();
 }

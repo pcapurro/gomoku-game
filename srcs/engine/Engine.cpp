@@ -64,8 +64,8 @@ void*	Engine::playMove(const int x, const int y, const bool refresh)
 	_state = isGameOver();
 
 	if (_moves == 0)
-		_startTime = std::chrono::high_resolution_clock::now(), cout << "registering start" << endl;
-	_endTime = std::chrono::high_resolution_clock::now(), cout << "registering end" << endl;
+		_startTime = std::chrono::high_resolution_clock::now();
+	_endTime = std::chrono::high_resolution_clock::now();
 
 	if (refresh == false && (int) _summary.size() != _actualMove)
 	{
