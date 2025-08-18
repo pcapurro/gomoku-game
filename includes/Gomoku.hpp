@@ -65,6 +65,33 @@
 #  define PLAYER2_COLOR 1
 # endif
 
+# ifndef LINE
+#  define LINE 5
+# endif
+
+# if LINE > MAP_WIDTH || LINE > MAP_HEIGHT || LINE < 2
+#  undef LINE
+#  define LINE 5
+# endif
+
+# ifndef DOUBLE_THREE
+#  define DOUBLE_THREE 0
+# endif
+
+# if DOUBLE_THREE != 1 && DOUBLE_THREE != 0
+#  undef DOUBLE_THREE
+#  define DOUBLE_THREE 0
+# endif
+
+# ifndef CAPTURE
+#  define CAPTURE 10
+# endif
+
+# if CAPTURE < 2 || CAPTURE > 42
+#  undef CAPTURE
+#  define CAPTURE 10
+# endif
+
 # define END_COLOR "\033[0m"
 
 # define EMPTY 0

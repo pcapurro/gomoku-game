@@ -209,7 +209,7 @@ int		Engine::getFiveLine(const int player, const int* board)
 	for (int i = 0; i != MAP_WIDTH * MAP_HEIGHT; i++)
 	{
 		if (board[i] == player \
-			&& getAlignements(i % MAP_WIDTH, i / MAP_WIDTH, 5, player, board) > 0)
+			&& getAlignements(i % MAP_WIDTH, i / MAP_WIDTH, LINE, player, board) > 0)
 			value++;
 	}
 
@@ -260,51 +260,24 @@ void	Engine::redoMove(void)
 		_actualMove++, refreshMap();
 }
 
-bool	Engine::isFreeThree(const int* line) const
+bool	Engine::verifyFreeThree(const int x, const int y, const int player)
 {
-	if (line[0] != EMPTY)
-		return (false);
+	int		alignNow = 0;
+	int		alignAfter = 0;
 
-	if (line[1] != EMPTY && line[2] != EMPTY \
-		&& line[3] != EMPTY && line[4] == EMPTY)
-		return (true);
+	resetTest();
+	_testBoard[(y * MAP_WIDTH) + x] = player;
 
-	if (line[1] != EMPTY && line[2] == EMPTY \
-		&& line[3] != EMPTY && line[4] != EMPTY \
-		&& line[5] == EMPTY)
-		return (true);
-
-	if (line[1] != EMPTY && line[2] != EMPTY \
-		&& line[3] == EMPTY && line[4] != EMPTY \
-		&& line[5] == EMPTY)
-		return (true);
-
-	return (false);
-}
-
-bool	Engine::isLineFive(void)
-{
-	int		value = 0;
-
-	value = getFiveLine(_otherPlayer, _board);
-	if (value == 0)
-		return (false);
-
-	vector<int>		legalMoves = {0};
-
-	legalMoves = getLegalMoves(_actualPlayer);
-
-	for (int i = 0; i != (int) legalMoves.size(); i++)
+	for (int i = 0; i != MAP_WIDTH * MAP_HEIGHT; i++)
 	{
-		int x = legalMoves.at(i) % MAP_WIDTH;
-		int y = legalMoves.at(i) / MAP_WIDTH;
-
-		tryMove(x, y, _actualPlayer);
-
-		value = getFiveLine(_otherPlayer, _testBoard);
-		if (value == 0)
-			return (false);
+		if (_board[i] == player)
+			alignNow += getFreeThrees(i % MAP_WIDTH, i / MAP_WIDTH, _board, player);
+		if (_testBoard[i] == player)
+			alignAfter += getFreeThrees(i % MAP_WIDTH, i / MAP_WIDTH, _testBoard, player);
 	}
+
+	if ((alignAfter / 2) - (alignNow / 2) == 2)
+		return (false);
 
 	return (true);
 }

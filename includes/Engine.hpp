@@ -43,12 +43,15 @@ class Engine
 
 		void			calculateCaptures(const int x, const int y, const int player, int* board, \
 											const bool simulation = false);
+		bool			isCapturing(const int x, const int y, const int player, const int* board);
 
 		bool			isLegal(const int x, const int y, const int player);
 		bool			isFreeThree(const int* line) const;
 		bool			isLineFive(void);
 
 		int				isGameOver(void);
+
+		bool			verifyFreeThree(const int x, const int y, const int player);
 
 		int				getFiveLine(const int player, const int* board);
 		int				getFreeThrees(const int x, const int y, const int* board, const int player) const;
