@@ -1,14 +1,20 @@
 #include "Display.hpp"
+#include "Shell.hpp"
+
 #include "Engine.hpp"
 
-int		main(void)
+int		main(const int argc, const char** argv)
 {
 	try
 	{
 		Engine		engine;
-		Display		window;
+		Display*	window = NULL;
+		Shell*		shell = NULL;
 
-		window.routine(&engine);
+		if (argc == 1 || string(argv[1]) != "--shell")
+			window = new Display, window->routine(&engine);
+		else
+			shell = new Shell, shell->routine(engine);
 	}
 	catch (...)
 	{

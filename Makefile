@@ -9,9 +9,12 @@ NAME = gomoku
 SRCS = srcs/main.cpp \
 	srcs/display/Routine.cpp \
 	srcs/display/Display.cpp \
+	srcs/shell/Routine.cpp \
+	srcs/shell/Shell.cpp \
 	srcs/engine/Engine.cpp \
 	srcs/engine/Init.cpp \
 	srcs/engine/Tools.cpp \
+	srcs/engine/Print.cpp \
 
 CXX = c++ \
 	-I includes/ \

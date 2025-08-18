@@ -13,6 +13,8 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
+# include <algorithm>
+
 # ifndef MAP_WIDTH
 #  define MAP_WIDTH 19
 # endif
@@ -70,7 +72,6 @@
 # define PLAYER_2 2
 
 using std::cout;
-using std::cerr;
 using std::endl;
 
 using std::vector;
@@ -78,6 +79,6 @@ using std::string;
 
 using std::chrono::high_resolution_clock;
 
-int		main(void);
+int		main(const int argc, const char** argv);
 
 #endif

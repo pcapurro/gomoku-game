@@ -20,6 +20,14 @@ int		Engine::getActualPlayer(void) const
 	return (_actualPlayer);
 }
 
+int		Engine::getOtherPlayer(void) const
+{
+	if (_actualPlayer == PLAYER_1)
+		return (PLAYER_2);
+
+	return (PLAYER_1);
+}
+
 int		Engine::getCptdValues(const int player) const
 {
 	if (player == PLAYER_1)
@@ -28,9 +36,22 @@ int		Engine::getCptdValues(const int player) const
 	return (_p2Cptd);
 }
 
-std::vector<int>	Engine::getLegalMoves(const int player)
+int		Engine::getPlayedMoves(void) const
 {
-	std::vector<int>	legalMoves = {0};
+	return (_moves);
+}
+
+string		Engine::getPlayerColor(const int player)
+{
+	if (player == PLAYER_1)
+		return (_player1Color);
+
+	return (_player2Color);
+}
+
+vector<int>		Engine::getLegalMoves(const int player)
+{
+	vector<int>		legalMoves = {0};
 
 	legalMoves.clear();
 
@@ -216,7 +237,7 @@ void	Engine::resetTest(void)
 
 void	Engine::refreshMap(void)
 {
-	std::vector<std::vector<int>>	summary;
+	vector<vector<int>>		summary;
 
 	summary = _summary;
 	resetGame(true);
@@ -269,7 +290,7 @@ bool	Engine::isLineFive(void)
 	if (value == 0)
 		return (false);
 
-	std::vector<int>	legalMoves = {0};
+	vector<int>		legalMoves = {0};
 
 	legalMoves = getLegalMoves(_actualPlayer);
 
@@ -286,50 +307,4 @@ bool	Engine::isLineFive(void)
 	}
 
 	return (true);
-}
-
-void	Engine::printSummary(void)
-{
-	if (_otherPlayer == PLAYER_1)
-		cout << "Player " << _player1Color << "#" << _otherPlayer << END_COLOR << " won the game! 🎉" << endl;
-	else
-		cout << "Player " << _player2Color << "#" << _otherPlayer << END_COLOR << " won the game! 🎉" << endl;
-	cout << endl;
-
-	cout << _summary.size() << " moves were played during the game:" << endl;
-
-	for (int i = 0; i != (int) _summary.size(); i++)
-		cout << i << ". {" << _summary[i][0] << ":" << _summary[i][1] << "}  ";
-	cout << endl << endl;
-
-	cout << "Player " << _player1Color << "#1" << END_COLOR << " captured: " << _p1Cptd << endl;
-	cout << "Player " << _player2Color << "#2" << END_COLOR << " captured: " << _p2Cptd << endl;
-	cout << endl;
-
-	cout << "The game lasted " << std::fixed << std::setprecision(2) \
-		<< std::chrono::duration<double>(_endTime - _startTime).count() << " second(s)." << endl;
-}
-
-void	Engine::displayMap(const int* board) const
-{
-	for (int i = 0; i != MAP_HEIGHT; i++)
-	{
-		for (int k = 0; k != MAP_WIDTH; k++)
-		{
-			std::cout << "[";
-
-			if (getInfo(k, i, board) != 0)
-			{
-				if (getInfo(k, i, board) == PLAYER_1)
-					std::cout << _player1Color << 1 << END_COLOR;
-				else
-					std::cout << _player2Color << 2 << END_COLOR;
-			}
-			else
-				std::cout << getInfo(k, i, board);
-
-			std::cout << "]";
-		}
-		std::cout << std::endl;
-	}
 }

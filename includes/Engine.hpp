@@ -22,12 +22,17 @@ class Engine
 
 		const int*		getMap(void) const;
 		int				getActualPlayer(void) const;
+		int				getOtherPlayer(void) const;
 		int				getCptdValues(const int player) const;
+		int				getPlayedMoves(void) const;
+
+		string			getPlayerColor(const int player);
 
 		vector<int>		getLegalMoves(const int player);
 
 		void			setColors(void);
 
+		void			printMap(void) const;
 		void			printSummary(void);
 
 	private:
@@ -38,8 +43,6 @@ class Engine
 
 		void			calculateCaptures(const int x, const int y, const int player, int* board, \
 											const bool simulation = false);
-
-		void			displayMap(const int* board) const;
 
 		bool			isLegal(const int x, const int y, const int player);
 		bool			isFreeThree(const int* line) const;
