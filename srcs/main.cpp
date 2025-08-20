@@ -8,18 +8,24 @@ int		main(const int argc, const char** argv)
 	try
 	{
 		Engine		engine;
-		Display*	window = NULL;
-		Shell*		shell = NULL;
 
 		if (argc == 1 || string(argv[1]) != "--shell")
-			window = new Display, window->routine(&engine);
+		{
+			Display		display;
+
+			display.routine(engine);
+		}
 		else
-			shell = new Shell, shell->routine(engine);
+		{
+			Shell	shell;
+
+			shell.routine(engine);
+		}
 	}
 	catch (...)
 	{
-		printf("An error occured.\n");
-		printf("Shutting down...\n");
+		fprintf(stderr, ERROR_1);
+		fprintf(stderr, ERROR_2);
 
 		return (1);
 	}

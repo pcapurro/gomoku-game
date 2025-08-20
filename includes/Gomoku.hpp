@@ -92,6 +92,9 @@
 #  define CAPTURE 10
 # endif
 
+# define ERROR_1 "An error occured.\n"
+# define ERROR_2 "Shutting down...\n"
+
 # define END_COLOR "\033[0m"
 
 # define EMPTY 0

@@ -41,13 +41,12 @@ void	Display::reactKey(Engine* gameEngine, sf::RenderWindow& window, sf::Event& 
 	}
 }
 
-void	Display::routine(void* engine)
+void	Display::routine(Engine& engine)
 {
-	Engine*				gameEngine = (Engine*) engine;
 	sf::RenderWindow	window(sf::VideoMode(WINDOW_W, WINDOW_H), "gomoku-game");
 
 	centerWindow(window);
-	displayMap(window, gameEngine);
+	displayMap(window, &engine);
 
 	bool	game = true;
 
@@ -62,11 +61,11 @@ void	Display::routine(void* engine)
 				window.close();
 
 			if (event.type == sf::Event::KeyPressed)
-				reactKey(gameEngine, window, event, game);
+				reactKey(&engine, window, event, game);
 
 			if (event.type == sf::Event::MouseButtonReleased \
 				&& event.mouseButton.button == sf::Mouse::Left)
-				reactMouse(gameEngine, window, event, game);
+				reactMouse(&engine, window, event, game);
 		}
 	}
 }

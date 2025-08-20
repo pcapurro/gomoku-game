@@ -28,7 +28,7 @@ class Display
 		void		reactMouse(Engine* gameEngine, sf::RenderWindow& window, \
 								sf::Event& event, bool& game);
 
-		void		routine(void* engine);
+		void		routine(Engine& engine);
 };
 
 #endif
