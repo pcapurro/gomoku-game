@@ -17,7 +17,8 @@ SRCS = srcs/main.cpp \
 	srcs/engine/Tools.cpp \
 	srcs/engine/Print.cpp \
 
-CXX = c++ -I includes/ \
+CXX = c++ \
+	-std=c++17 -I includes/ \
 	-D MAP_WIDTH=21 -D MAP_HEIGHT=21 \
 	-D PLAYER1_COLOR=2 -D PLAYER2_COLOR=1 \
 	-D LINE=5 -D DOUBLE_THREE=0 -D CAPTURE=10
